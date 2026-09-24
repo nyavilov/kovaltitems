@@ -6,6 +6,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,6 +19,46 @@ import org.bukkit.potion.PotionType;
 import org.nyadurkadev.kovaltItems.Main;
 
 public class GardenGloves implements Listener {
+
+    @EventHandler
+    public void onBlockBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        ItemStack offHandItem = player.getInventory().getItemInOffHand();
+
+        String keyInOffHandID = null;
+        if (offHandItem != null &&
+                offHandItem.getType() != Material.AIR &&
+                offHandItem.hasItemMeta()) {
+            NamespacedKey key = new NamespacedKey(Main.getInstance(), "key_id");
+            keyInOffHandID = offHandItem.getItemMeta()
+                    .getPersistentDataContainer().get(key, PersistentDataType.STRING);
+        }
+
+        Block block = event.getBlock();
+
+        if ("GLOVES".equals(keyInOffHandID)) {
+            if (block.getBlockData() instanceof Ageable ageable) {
+                if (ageable.getAge() == ageable.getMaximumAge()) {
+                    ItemStack extra = new ItemStack(block.getType().equals(Material.WHEAT) ?
+                            Material.WHEAT : block.getType());
+                    extra.setAmount((int) (Math.random() * 6) + 1);
+                    block.getWorld().dropItemNaturally(block.getLocation(), extra);
+
+                    Damageable damageable = (Damageable) offHandItem.getItemMeta();
+
+                    damageable.setDamage(damageable.getDamage() + 1);
+
+                    if (damageable.getDamage() >= offHandItem.getType().getMaxDurability()) {
+                        offHandItem.setAmount(0);
+                        player.playSound(player.getLocation(),
+                                Sound.ENTITY_ITEM_BREAK, 1.0f, 1.0f);
+                    } else {
+                        offHandItem.setItemMeta(damageable);
+                    }
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
@@ -80,7 +121,7 @@ public class GardenGloves implements Listener {
                     }
 
                     ItemStack berries = new ItemStack(Material.SWEET_BERRIES,
-                            (int) (Math.random() * 10) + 1);
+                            (int) (Math.random() * 6) + 1);
                     clickedBlock.getWorld()
                             .dropItemNaturally(blockLoc, berries);
 
