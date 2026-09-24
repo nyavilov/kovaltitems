@@ -57,7 +57,7 @@ public class ItemUtils implements CommandExecutor {
         lore.add("");
         lore.add("§fПоложите перчатку в §aлевую руку");
         lore.add("§fИ начните собирать ягоды для");
-        lore.add("получения §aдополнительного дропа");
+        lore.add("§fполучения §aдополнительного §fдропа");
         lore.add("");
         meta.setLore(lore);
 
