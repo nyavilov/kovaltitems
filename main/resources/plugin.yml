@@ -1,0 +1,14 @@
+name: KovaltItems
+description: $description
+version: '${version}'
+
+main: org.nyadurkadev.kovaltItems.Main
+api-version: '1.21.11'
+load: POSTWORLD
+
+authors: [ nyavilov ]
+commands:
+  getwatercan:
+    description: nyavilov
+  getgloves:
+    description: nyavilov
