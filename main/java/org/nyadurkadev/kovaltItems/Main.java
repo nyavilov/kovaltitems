@@ -4,6 +4,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.nyadurkadev.kovaltItems.events.GardenGloves;
 import org.nyadurkadev.kovaltItems.events.WaterCan;
 import org.nyadurkadev.kovaltItems.item.ItemUtils;
+import org.nyadurkadev.kovaltItems.recipes.Recipe;
 
 public final class Main extends JavaPlugin {
 
@@ -17,6 +18,8 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
 
         instance = this;
+
+        Recipe.registerRecipes();
 
         this.getCommand("getwatercan").setExecutor(new ItemUtils());
         this.getCommand("getgloves").setExecutor(new ItemUtils());

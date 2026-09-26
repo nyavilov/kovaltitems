@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ItemUtils implements CommandExecutor {
 
-    public ItemStack createWaterCan() {
+    public static ItemStack createWaterCan() {
         ItemStack waterCan = new ItemStack(Material.AMETHYST_SHARD);
         ItemMeta meta = waterCan.getItemMeta();
 
@@ -44,7 +44,7 @@ public class ItemUtils implements CommandExecutor {
         return waterCan;
     }
 
-    public ItemStack createGardenGloves() {
+    public static ItemStack createGardenGloves() {
         ItemStack gloves = new ItemStack(Material.LEATHER_BOOTS);
         ItemMeta meta = gloves.getItemMeta();
 
